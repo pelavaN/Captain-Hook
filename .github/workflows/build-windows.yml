@@ -23,11 +23,12 @@ jobs:
           pip install pyinstaller
 
       - name: Build exe (onefile)
+        shell: cmd
         run: |
-          pyinstaller --noconsole --onefile \
-            --add-data "kh_config.json;." \
-            --add-data "usage_logs.json;." \
-            --add-data "requirements.txt;." \
+          pyinstaller --noconsole --onefile ^
+            --add-data "kh_config.json;." ^
+            --add-data "usage_logs.json;." ^
+            --add-data "requirements.txt;." ^
             --name kirmizi_quickbuttons kirmizi_quickbuttons.py
 
       - name: Upload artifact
