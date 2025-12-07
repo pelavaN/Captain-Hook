@@ -136,11 +136,14 @@ def load_config():
                         data = json.load(f)
                     # attempt to write extracted copy to cwd for convenience
                     try:
-                        with open(os.path.join(os.getcwd(), "kh_config.json"), "w", encoding="utf-8") as out:
+                        extracted = os.path.join(os.getcwd(), "kh_config.json")
+                        with open(extracted, "w", encoding="utf-8") as out:
                             json.dump(data, out, ensure_ascii=False, indent=2)
-                        # update global path so future saves go to extracted file
-                        global CONFIG_PATH
-                        CONFIG_PATH = os.path.join(os.getcwd(), "kh_config.json")
+                        # update module-level CONFIG_PATH so future saves go to extracted file
+                        try:
+                            globals()["CONFIG_PATH"] = extracted
+                        except Exception:
+                            pass
                     except Exception:
                         pass
                     return data
