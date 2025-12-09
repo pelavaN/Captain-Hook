@@ -1,19 +1,15 @@
 @echo off
-REM Windows: one-folder EXE build script using PyInstaller
-REM Usage: double-click or run from project root in cmd
-
+REM Windows: build one-file EXE with PyInstaller
 python -m pip install --upgrade pip
+pip install -r requirements.txt
 pip install pyinstaller
 
-REM Include config and log files in the onefile EXE (they'll be bundled and
-REM extracted at runtime). Note: when using --onefile, data is available
-REM via sys._MEIPASS at runtime.
 pyinstaller --noconsole --onefile ^
-  --add-data "kh_config.json;." ^
-  --add-data "usage_logs.json;." ^
-  --add-data "requirements.txt;." ^
-  --name kirmizi_quickbuttons kirmizi_quickbuttons.py
+  --name social_scheduler ^
+  --add-data ".env.example;." ^
+  --add-data "README.md;." ^
+  src/main.py
 
 echo.
-echo Build tamamlandı. Çıktı klasörü: dist\kirmizi_quickbuttons
+echo Build tamamlandi. dist\\social_scheduler.exe dosyasini Inno Setup ile kurulum paketi yapabilirsiniz.
 pause

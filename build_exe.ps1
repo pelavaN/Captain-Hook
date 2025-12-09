@@ -1,29 +1,20 @@
-<#
-PowerShell script to build a Windows EXE using PyInstaller.
-Run in PowerShell on Windows (from repo root):
-  .\build_exe.ps1
-#>
+<#!
+PowerShell script to build Windows EXE using PyInstaller.
+Run from repo root on Windows: ./build_exe.ps1
+!>
 Set-StrictMode -Version Latest
-
 python -m pip install --upgrade pip
+pip install -r requirements.txt
 pip install pyinstaller
 
-$add = @(
-  "kh_config.json;.",
-  "usage_logs.json;.",
-  "requirements.txt;."
-)
-
-
-$args = @(
+$arguments = @(
   '--noconsole',
   '--onefile',
-  ( $add | ForEach-Object { "--add-data `"$_`"" } ),
-  '--name','kirmizi_quickbuttons',
-  'kirmizi_quickbuttons.py'
+  '--name','social_scheduler',
+  '--add-data','.env.example;.',
+  '--add-data','README.md;.',
+  'src/main.py'
 )
 
-Write-Host "PyInstaller çalıştırılıyor..."
-pyinstaller @args
-
-Write-Host "Build tamamlandı. Dist klasörü: dist\kirmizi_quickbuttons"
+pyinstaller @arguments
+Write-Host "Build tamamlandi. dist/social_scheduler.exe hazır."
